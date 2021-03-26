@@ -54,4 +54,5 @@ public class BookDetailsFragment extends Fragment {
         textView.setText(book.getBookTitle());
         textView2.setText(book.getBookAuthor());
     }
+
 }

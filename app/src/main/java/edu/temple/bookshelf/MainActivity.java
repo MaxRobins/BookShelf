@@ -1,7 +1,9 @@
 package edu.temple.bookshelf;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import java.util.ArrayList;
@@ -10,6 +12,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
 
     ArrayList<Book> bookArrayList;
     BookDetailsFragment bookDetailsFragment;
+    BookListFragment bookListFragment;
 
     boolean container2present;
 
@@ -18,7 +21,11 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        container2present = findViewById(R.id.container_2) != null;//true
+        //container2present = findViewById(R.id.container_2) != null;//true
+
+        Context context;
+        bookListFragment = new BookListFragment();
+        bookDetailsFragment = new BookDetailsFragment();
 
         bookArrayList = new ArrayList<>();
 
@@ -33,6 +40,8 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
         bookArrayList.add(new Book("Dividing the Spoils", "Robin Waterfield"));
         bookArrayList.add(new Book("Augustus", "Anthony Everitt"));
 
+
+
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.container_1, BookListFragment.newInstance(bookArrayList))
@@ -44,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.container_2, bookDetailsFragment)
+                    .addToBackStack(null)
                     .commit();
         }
     }
@@ -54,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.container_1, BookDetailsFragment.newInstance(bookArrayList.get(position)))
+                    .addToBackStack(null)
                     .commit();
         }
         else{
