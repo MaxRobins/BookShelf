@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
     private final int SEARCH_BOOK_REQUEST_CODE = 21;
 
     String booksList="";
+    ArrayList<Book> bookListData=new ArrayList<>();
 
 
     @Override

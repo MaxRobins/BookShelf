@@ -10,25 +10,26 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class BooksAdapter extends BaseAdapter {
 
     Context context;
-    BookList books;
+    ArrayList<Book> bookList;
 
-    public BooksAdapter (Context context, BookList books) {
+    public BooksAdapter(Context context, ArrayList<Book> bookList) {
         this.context = context;
-        this.books = books;
+        this.bookList = bookList;
     }
 
     @Override
     public int getCount() {
-        return books.size();
+        return bookList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return books.get(position);
+        return bookList.get(position);
     }
 
     @Override

@@ -10,14 +10,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
+
 public class BookDetailsFragment extends Fragment {
 
     private static final String BOOK_KEY = "book";
     private Book book;
 
     TextView titleTextView, authorTextView;
-    TextView coverTextView;
-
+    ImageView imgBook;
 
     public BookDetailsFragment() {}
 
@@ -50,8 +52,7 @@ public class BookDetailsFragment extends Fragment {
 
         titleTextView = v.findViewById(R.id.titleTextView);
         authorTextView = v.findViewById(R.id.authorTextView);
-        coverTextView =v.findViewById(R.id.textView7);
-        //coverImageView = v.findViewById(R.id.imageView);
+        imgBook = v.findViewById(R.id.imgBook);
 
         /*
         Because this fragment can be created with or without
@@ -70,6 +71,6 @@ public class BookDetailsFragment extends Fragment {
     public void displayBook(Book book) {
         titleTextView.setText(book.getTitle());
         authorTextView.setText(book.getAuthor());
-        coverTextView.setText(book.getCoverUrl());
+        Picasso.get().load(book.getCoverURL()).into(imgBook);
     }
 }
