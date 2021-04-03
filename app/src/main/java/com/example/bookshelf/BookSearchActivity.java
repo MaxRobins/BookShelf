@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,7 +21,6 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,19 +33,15 @@ import java.net.URL;
 public class BookSearchActivity extends AppCompatActivity {
 
     EditText urlEditText;
-    Button searchButton, cancelButton;
-    ContentLoadingProgressBar progressBar;
+    Button searchButton,cancelButton;
+    TextView displayTextView;
     RequestQueue requestQueue;
+    ContentLoadingProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_search2);
-
-        urlEditText = findViewById(R.id.searchEditText);
-        searchButton = findViewById(R.id.searchButton);
-        requestQueue = Volley.newRequestQueue(this);
-
 
         urlEditText = findViewById(R.id.searchEditText);
         searchButton = findViewById(R.id.searchButton);
@@ -93,9 +89,11 @@ public class BookSearchActivity extends AppCompatActivity {
         /*findViewById(R.id.searchButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String url = "https://kamorris.com/lab/cis3515/search.php?term";
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse(url));
+
                 if(intent.resolveActivity(getPackageManager())!=null){
                     startActivity(intent);
                 }
