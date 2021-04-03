@@ -3,17 +3,20 @@ package com.example.bookshelf;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Book implements Parcelable {
     private String title;
     private String author;
     private int id;
-    private String coverUrl;
+    @SerializedName("cover_url")
+    private String coverURL;
 
-    public Book(String title, String author, int id, String coverUrl) {
+    public Book(String title, String author, int id, String coverURL) {
         this.title = title;
         this.author = author;
         this.id = id;
-        this.coverUrl = coverUrl;
+        this.coverURL = coverURL;
     }
 
     protected Book(Parcel in) {
@@ -49,6 +52,22 @@ public class Book implements Parcelable {
         this.author = author;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getCoverURL() {
+        return coverURL;
+    }
+
+    public void setCoverURL(String coverURL) {
+        this.coverURL = coverURL;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -58,21 +77,5 @@ public class Book implements Parcelable {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(title);
         parcel.writeString(author);
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getCoverUrl() {
-        return coverUrl;
-    }
-
-    public void setCoverUrl(String coverUrl) {
-        this.coverUrl = coverUrl;
     }
 }

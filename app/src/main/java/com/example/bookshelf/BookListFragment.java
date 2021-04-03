@@ -11,16 +11,19 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BookListFragment extends Fragment {
 
     private static final String BOOK_LIST_KEY = "booklist";
-    private BookList books;
+    private ArrayList<Book> books;
 
     BookSelectedInterface parentActivity;
 
     public BookListFragment() {}
 
-    public static BookListFragment newInstance(BookList books) {
+    public static BookListFragment newInstance(ArrayList<Book> books) {
         BookListFragment fragment = new BookListFragment();
         Bundle args = new Bundle();
 
@@ -29,7 +32,7 @@ public class BookListFragment extends Fragment {
          therefore we can place a BookList inside a bundle
          by using that put() method.
          */
-        args.putParcelable(BOOK_LIST_KEY, books);
+        args.putParcelableArrayList(BOOK_LIST_KEY, books);
         fragment.setArguments(args);
         return fragment;
     }
@@ -53,7 +56,7 @@ public class BookListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            books = getArguments().getParcelable(BOOK_LIST_KEY);
+            books = getArguments().getParcelableArrayList(BOOK_LIST_KEY);
         }
     }
 

@@ -1,5 +1,6 @@
 package com.example.bookshelf;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -10,21 +11,86 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity implements BookListFragment.BookSelectedInterface {
 
-    FragmentManager fm;
+    FragmentManager fm;//
 
-    boolean twoPane;
-    BookDetailsFragment bookDetailsFragment;
-    Book selectedBook;
-    private final String KEY_SELECTED_BOOK = "selectedBook";
+    boolean twoPane;//
+    BookDetailsFragment bookDetailsFragment;//
+    Book selectedBook;//
+    private final String KEY_SELECTED_BOOK = "selectedBook";//
 
-    public static final String EXTRA_MESSAGE = "com.example.bookshelf.MESSAGE";
+    private final String KEY_BOOK_LIST = "bookList";
+    private final int SEARCH_BOOK_REQUEST_CODE = 21;
+
+    String booksList="";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        findViewById(R.id.buttonSecondActivity).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, BookSearchActivity.class);
+                startActivityForResult(intent,SEARCH_BOOK_REQUEST_CODE);
+            }
+        });
+
+        //Fetch selected book if there was one
+        if (savedInstanceState != null){
+            selectedBook = savedInstanceState.getParcelable(KEY_SELECTED_BOOK);
+            booksList=savedInstanceState.getString(KEY_BOOK_LIST);
+            Gson gson=new Gson();
+            Type type=new TypeToken<ArrayList<Book>>(){}.getType();
+            bookListData=gson.fromJson(booksList,type);
+        }
+
+        twoPane = findViewById(R.id.container2) != null;
+
+        fm = getSupportFragmentManager();
+
+        Fragment fragment1;
+        fragment1 = fm.findFragmentById(R.id.container1);
+
+
+        // At this point, I only want to have BookListFragment be displayed in container_1
+        if (fragment1 instanceof BookDetailsFragment) {
+            fm.popBackStack();
+        } else if (!(fragment1 instanceof BookListFragment))
+            fm.beginTransaction()
+                    .add(R.id.container1, BookListFragment.newInstance(bookListData))
+                    .commit();
+
+        /*
+        If we have two containers available, load a single instance
+        of BookDetailsFragment to display all selected books
+         */
+        bookDetailsFragment = (selectedBook == null) ? new BookDetailsFragment() : BookDetailsFragment.newInstance(selectedBook);
+        if (twoPane) {
+            fm.beginTransaction()
+                    .replace(R.id.container2, bookDetailsFragment)
+                    .commit();
+        } else if (selectedBook != null) {
+            /*
+            If a book was selected, and we now have a single container, replace
+            BookListFragment with BookDetailsFragment, making the transaction reversible
+             */
+            fm.beginTransaction()
+                    .replace(R.id.container1, bookDetailsFragment)
+                    .addToBackStack(null)
+                    .commit();
+        }
+
+
 
         /*Intent intent = new Intent(this, BookSearchActivity.class);
         EditText editText = (EditText) findViewById(R.id.searchEditText);
@@ -32,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
         String message = editText.getText().toString();
         intent.putExtra(EXTRA_MESSAGE, message);
         startActivity(intent);*/
-
+        /*
         findViewById(R.id.buttonSecondActivity).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -40,6 +106,8 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
                 startActivity(intent);
             }
         });
+
+
         //Fetch selected book if there was one
 
         if (savedInstanceState != null)
@@ -79,7 +147,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
                     .replace(R.id.container1, bookDetailsFragment)
                     .addToBackStack(null)
                     .commit();
-        }
+        }*/
 
     }
 
@@ -131,6 +199,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelable(KEY_SELECTED_BOOK, selectedBook);
+        outState.putString(KEY_BOOK_LIST, booksList);
     }
 
     @Override
