@@ -9,13 +9,15 @@ public class Book implements Parcelable {
     private String title;
     private String author;
     private int id;
+    private int duration;
     @SerializedName("cover_url")
     private String coverURL;
 
-    public Book(String title, String author, int id, String coverURL) {
+    public Book(String title, String author, int id, int duration, String coverURL) {
         this.title = title;
         this.author = author;
         this.id = id;
+        this.duration = duration;
         this.coverURL = coverURL;
     }
 
@@ -77,5 +79,13 @@ public class Book implements Parcelable {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(title);
         parcel.writeString(author);
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
 }

@@ -1,2 +1,3 @@
+include ':AudioBookService'
 rootProject.name='BookShelf'
 include ':app'
