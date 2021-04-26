@@ -19,18 +19,18 @@
         tools:text="Book title here" />
 
     <ImageButton
-        android:id="@+id/playButton"
+        android:id="@+id/pauseButton"
         android:layout_width="0dp"
         android:layout_height="54dp"
         android:src="@android:drawable/ic_media_pause"
         android:tint="@android:color/darker_gray"
         android:layout_margin="08dp"
-        app:layout_constraintEnd_toStartOf="@+id/pauseButton"
+        app:layout_constraintEnd_toStartOf="@+id/playButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/titleTextView" />
 
     <ImageButton
-        android:id="@+id/pauseButton"
+        android:id="@+id/playButton"
         android:layout_width="0dp"
         android:layout_height="54dp"
         android:src="@android:drawable/ic_media_play"
@@ -38,7 +38,7 @@
         android:layout_margin="08dp"
         app:layout_constraintTop_toBottomOf="@id/titleTextView"
         app:layout_constraintEnd_toStartOf="@+id/stopButton"
-        app:layout_constraintStart_toEndOf="@+id/playButton" />
+        app:layout_constraintStart_toEndOf="@+id/pauseButton" />
 
     <ImageButton
         android:id="@+id/stopButton"
@@ -49,7 +49,7 @@
         android:layout_margin="08dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/titleTextView"
-        app:layout_constraintStart_toEndOf="@+id/pauseButton" />
+        app:layout_constraintStart_toEndOf="@+id/playButton" />
 
     <androidx.appcompat.widget.AppCompatSeekBar
         android:id="@+id/playProgress"

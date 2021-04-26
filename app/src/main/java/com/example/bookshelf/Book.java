@@ -9,16 +9,16 @@ public class Book implements Parcelable {
     private String title;
     private String author;
     private int id;
-    private int duration;
     @SerializedName("cover_url")
     private String coverURL;
+    private int duration;
 
-    public Book(String title, String author, int id, int duration, String coverURL) {
+    public Book(String title, String author, int id, String coverURL, int duration) {
         this.title = title;
         this.author = author;
         this.id = id;
-        this.duration = duration;
         this.coverURL = coverURL;
+        this.duration = duration;
     }
 
     protected Book(Parcel in) {
